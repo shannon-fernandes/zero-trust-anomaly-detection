@@ -23,15 +23,10 @@ def load_csv(path):
         df = pd.read_csv(path)
 
     # The testing file currently appears to have no header.
+    
     elif path.name == "UNSW_NB15_testing-set.csv":
-        train_columns = pd.read_csv(config.TRAIN_FILE, nrows=0).columns.tolist()
+        df = pd.read_csv(path)
 
-        df = pd.read_csv(
-            path,
-            sep="\t",
-            header=None,
-            names=train_columns
-        )
     else:
         raise ValueError(f"Unsupported dataset file: {path.name}")
 
