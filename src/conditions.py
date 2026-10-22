@@ -44,7 +44,7 @@ def add_noise(X, noise_fraction=0.05, random_state=42):
 
     values[row_indices, col_indices] += rng.normal(
         loc=0.0,
-        scale=scales[col_indices] * 0.1
+        scale=scales[col_indices] * 0.1,
     )
 
     return pd.DataFrame(
@@ -88,9 +88,7 @@ def add_missing_values(
     return result
 
 
-def set_attack_ratio(
-    X, y, attack_ratio, random_state=42
-):
+def set_attack_ratio(X, y, attack_ratio, random_state=42):
     """Return a subset with approximately the requested attack proportion.
 
     Label 0 = normal traffic; label 1 = attack traffic.
@@ -139,6 +137,72 @@ def set_attack_ratio(
     y_subset = labels.loc[selected_indices].copy()
 
     return X_subset, y_subset
+
+
+def apply_scenario_to_raw_data(
+    raw_df,
+    scenario_name,
+    noise_fraction=0.05,
+    missing_fraction=0.05,
+    random_state=42,
+):
+    """Apply noise or missing values to raw numeric network features."""
+    result = raw_df.copy()
+
+    if scenario_name not in {"noisy", "missing"}:
+        return result
+
+    numeric_columns = [
+        col
+        for col in result.select_dtypes(include=[np.number]).columns
+        if col not in {"id", "label"}
+    ]
+
+    if not numeric_columns:
+        return result
+
+    # Convert to float BEFORE assigning decimals or NaN.
+    result[numeric_columns] = result[numeric_columns].astype(float)
+    values = result[numeric_columns].to_numpy(copy=True)
+    rng = np.random.default_rng(random_state)
+
+    if scenario_name == "noisy":
+        scales = np.nanstd(values, axis=0)
+        scales = np.where(np.isfinite(scales), scales, 0)
+        count = int(values.size * noise_fraction)
+
+        if count:
+            indices = rng.choice(values.size, count, replace=False)
+            rows, cols = np.unravel_index(indices, values.shape)
+            values[rows, cols] += rng.normal(
+                loc=0.0,
+                scale=scales[cols] * 0.1,
+            )
+
+    elif scenario_name == "missing":
+        count = int(values.size * missing_fraction)
+
+        if count:
+            indices = rng.choice(values.size, count, replace=False)
+            rows, cols = np.unravel_index(indices, values.shape)
+            values[rows, cols] = np.nan
+
+        # Impute using medians from the selected raw scenario data.
+        # Replace non-finite medians with zero as a safe fallback.
+        medians = np.nanmedian(values, axis=0)
+        medians = np.where(np.isfinite(medians), medians, 0)
+
+        missing_rows, missing_cols = np.where(np.isnan(values))
+        values[missing_rows, missing_cols] = medians[missing_cols]
+
+    # Assign a float DataFrame to avoid pandas integer-dtype errors.
+    result[numeric_columns] = pd.DataFrame(
+        values,
+        columns=numeric_columns,
+        index=result.index,
+    )
+
+    return result
 
 
 def create_scenarios(
@@ -203,7 +267,6 @@ if __name__ == "__main__":
     from preprocess import load_unsw
 
     X_train, X_test, _, y_test, _ = load_unsw()
-
     scenarios = create_scenarios(X_train, X_test, y_test)
 
     for name, data in scenarios.items():
