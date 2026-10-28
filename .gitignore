@@ -1,5 +1,16 @@
+# Python cache
 __pycache__/
-*.pyc
+*.py[cod]
+
+# Virtual environments
 .venv/
 venv/
+env/
+
+# Dataset files
 data/*.csv
+data/*.zip
+
+# Generated files
+.DS_Store
+Thumbs.db
