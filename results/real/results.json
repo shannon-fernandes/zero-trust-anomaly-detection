@@ -1,0 +1,599 @@
+{
+  "data_source": "real",
+  "dataset": "UNSW-NB15",
+  "preprocessing_report": {
+    "train_file": "UNSW_NB15_training-set.csv",
+    "test_file": "UNSW_NB15_testing-set.csv",
+    "train_rows_loaded": 175341,
+    "test_rows_loaded": 82332,
+    "train_rows_after_duplicate_removal": 107740,
+    "train_rows_final": 107740,
+    "test_rows_final": 82332,
+    "missing_values_filled_train": 0,
+    "missing_values_filled_test": 0,
+    "num_features": 42,
+    "text_columns_encoded": [
+      "proto",
+      "service",
+      "state"
+    ],
+    "train_normal": 51890,
+    "train_attack": 55850,
+    "test_normal": 37000,
+    "test_attack": 45332
+  },
+  "models": {
+    "Random Forest": {
+      "accuracy": 0.8760141864645581,
+      "precision": 0.8247050992863217,
+      "recall": 0.9839627636106945,
+      "f1": 0.8973224164638194,
+      "false_positive_rate": 0.25624324324324327,
+      "confusion_matrix": [
+        [
+          27519,
+          9481
+        ],
+        [
+          727,
+          44605
+        ]
+      ],
+      "tn": 27519,
+      "fp": 9481,
+      "fn": 727,
+      "tp": 44605,
+      "n_samples": 82332,
+      "training_seconds": 6.2168730000266805,
+      "prediction_seconds": 0.13968559994827956
+    },
+    "Logistic Regression": {
+      "accuracy": 0.8093086527717048,
+      "precision": 0.7519899312878427,
+      "recall": 0.9753375099267626,
+      "f1": 0.8492240319606638,
+      "false_positive_rate": 0.3941081081081081,
+      "confusion_matrix": [
+        [
+          22418,
+          14582
+        ],
+        [
+          1118,
+          44214
+        ]
+      ],
+      "tn": 22418,
+      "fp": 14582,
+      "fn": 1118,
+      "tp": 44214,
+      "n_samples": 82332,
+      "training_seconds": 1.242066100006923,
+      "prediction_seconds": 0.04866029997356236
+    }
+  },
+  "baseline": {
+    "accuracy": 0.6943958606617111,
+    "precision": 0.7606948070411249,
+    "recall": 0.6491882114179829,
+    "f1": 0.700532022518716,
+    "false_positive_rate": 0.2502162162162162,
+    "confusion_matrix": [
+      [
+        27742,
+        9258
+      ],
+      [
+        15903,
+        29429
+      ]
+    ],
+    "tn": 27742,
+    "fp": 9258,
+    "fn": 15903,
+    "tp": 29429,
+    "n_samples": 82332
+  },
+  "zero_trust": {
+    "accuracy": 0.6943958606617111,
+    "precision": 0.7606948070411249,
+    "recall": 0.6491882114179829,
+    "f1": 0.700532022518716,
+    "false_positive_rate": 0.2502162162162162,
+    "confusion_matrix": [
+      [
+        27742,
+        9258
+      ],
+      [
+        15903,
+        29429
+      ]
+    ],
+    "tn": 27742,
+    "fp": 9258,
+    "fn": 15903,
+    "tp": 29429,
+    "n_samples": 82332,
+    "summary": {
+      "total": 82332,
+      "thresholds": {
+        "allow_below": 0.3,
+        "deny_at_or_above": 0.6,
+        "flag_counts_as_attack": true
+      },
+      "decisions": {
+        "ALLOW": {
+          "count": 43645,
+          "percent": 53.01,
+          "attacks": 15903,
+          "normal": 27742
+        },
+        "FLAG": {
+          "count": 8509,
+          "percent": 10.33,
+          "attacks": 3690,
+          "normal": 4819
+        },
+        "DENY": {
+          "count": 30178,
+          "percent": 36.65,
+          "attacks": 25739,
+          "normal": 4439
+        }
+      }
+    }
+  },
+  "scenarios": {
+    "clean": {
+      "Random Forest": {
+        "accuracy": 0.8760141864645581,
+        "precision": 0.8247050992863217,
+        "recall": 0.9839627636106945,
+        "f1": 0.8973224164638194,
+        "false_positive_rate": 0.25624324324324327,
+        "confusion_matrix": [
+          [
+            27519,
+            9481
+          ],
+          [
+            727,
+            44605
+          ]
+        ],
+        "tn": 27519,
+        "fp": 9481,
+        "fn": 727,
+        "tp": 44605,
+        "n_samples": 82332
+      },
+      "Logistic Regression": {
+        "accuracy": 0.8093086527717048,
+        "precision": 0.7519899312878427,
+        "recall": 0.9753375099267626,
+        "f1": 0.8492240319606638,
+        "false_positive_rate": 0.3941081081081081,
+        "confusion_matrix": [
+          [
+            22418,
+            14582
+          ],
+          [
+            1118,
+            44214
+          ]
+        ],
+        "tn": 22418,
+        "fp": 14582,
+        "fn": 1118,
+        "tp": 44214,
+        "n_samples": 82332
+      },
+      "Rule-based baseline": {
+        "accuracy": 0.6943958606617111,
+        "precision": 0.7606948070411249,
+        "recall": 0.6491882114179829,
+        "f1": 0.700532022518716,
+        "false_positive_rate": 0.2502162162162162,
+        "confusion_matrix": [
+          [
+            27742,
+            9258
+          ],
+          [
+            15903,
+            29429
+          ]
+        ],
+        "tn": 27742,
+        "fp": 9258,
+        "fn": 15903,
+        "tp": 29429,
+        "n_samples": 82332
+      },
+      "Zero-trust (rules)": {
+        "accuracy": 0.6943958606617111,
+        "precision": 0.7606948070411249,
+        "recall": 0.6491882114179829,
+        "f1": 0.700532022518716,
+        "false_positive_rate": 0.2502162162162162,
+        "confusion_matrix": [
+          [
+            27742,
+            9258
+          ],
+          [
+            15903,
+            29429
+          ]
+        ],
+        "tn": 27742,
+        "fp": 9258,
+        "fn": 15903,
+        "tp": 29429,
+        "n_samples": 82332
+      }
+    },
+    "noisy": {
+      "Random Forest": {
+        "accuracy": 0.8677063596171598,
+        "precision": 0.8136155022947476,
+        "recall": 0.9854848672019765,
+        "f1": 0.891340782122905,
+        "false_positive_rate": 0.27659459459459457,
+        "confusion_matrix": [
+          [
+            26766,
+            10234
+          ],
+          [
+            658,
+            44674
+          ]
+        ],
+        "tn": 26766,
+        "fp": 10234,
+        "fn": 658,
+        "tp": 44674,
+        "n_samples": 82332
+      },
+      "Logistic Regression": {
+        "accuracy": 0.8107904581450712,
+        "precision": 0.7551976121860848,
+        "recall": 0.9711682696549898,
+        "f1": 0.8496738333269,
+        "false_positive_rate": 0.3857027027027027,
+        "confusion_matrix": [
+          [
+            22729,
+            14271
+          ],
+          [
+            1307,
+            44025
+          ]
+        ],
+        "tn": 22729,
+        "fp": 14271,
+        "fn": 1307,
+        "tp": 44025,
+        "n_samples": 82332
+      },
+      "Rule-based baseline": {
+        "accuracy": 0.6878734878297624,
+        "precision": 0.7457813830053578,
+        "recall": 0.6571075619871173,
+        "f1": 0.6986420245326829,
+        "false_positive_rate": 0.2744324324324324,
+        "confusion_matrix": [
+          [
+            26846,
+            10154
+          ],
+          [
+            15544,
+            29788
+          ]
+        ],
+        "tn": 26846,
+        "fp": 10154,
+        "fn": 15544,
+        "tp": 29788,
+        "n_samples": 82332
+      },
+      "Zero-trust (rules)": {
+        "accuracy": 0.6878734878297624,
+        "precision": 0.7457813830053578,
+        "recall": 0.6571075619871173,
+        "f1": 0.6986420245326829,
+        "false_positive_rate": 0.2744324324324324,
+        "confusion_matrix": [
+          [
+            26846,
+            10154
+          ],
+          [
+            15544,
+            29788
+          ]
+        ],
+        "tn": 26846,
+        "fp": 10154,
+        "fn": 15544,
+        "tp": 29788,
+        "n_samples": 82332
+      }
+    },
+    "missing": {
+      "Random Forest": {
+        "accuracy": 0.864924938055677,
+        "precision": 0.8104164776336086,
+        "recall": 0.9851319156445778,
+        "f1": 0.8892738731742286,
+        "false_positive_rate": 0.28235135135135137,
+        "confusion_matrix": [
+          [
+            26553,
+            10447
+          ],
+          [
+            674,
+            44658
+          ]
+        ],
+        "tn": 26553,
+        "fp": 10447,
+        "fn": 674,
+        "tp": 44658,
+        "n_samples": 82332
+      },
+      "Logistic Regression": {
+        "accuracy": 0.7894621775251421,
+        "precision": 0.7566363569700081,
+        "recall": 0.9104606017824054,
+        "f1": 0.8264517420905086,
+        "false_positive_rate": 0.3587837837837838,
+        "confusion_matrix": [
+          [
+            23725,
+            13275
+          ],
+          [
+            4059,
+            41273
+          ]
+        ],
+        "tn": 23725,
+        "fp": 13275,
+        "fn": 4059,
+        "tp": 41273,
+        "n_samples": 82332
+      },
+      "Rule-based baseline": {
+        "accuracy": 0.6962420444055775,
+        "precision": 0.7687019065499643,
+        "recall": 0.6412688608488485,
+        "f1": 0.6992266894370347,
+        "false_positive_rate": 0.23640540540540542,
+        "confusion_matrix": [
+          [
+            28253,
+            8747
+          ],
+          [
+            16262,
+            29070
+          ]
+        ],
+        "tn": 28253,
+        "fp": 8747,
+        "fn": 16262,
+        "tp": 29070,
+        "n_samples": 82332
+      },
+      "Zero-trust (rules)": {
+        "accuracy": 0.6962420444055775,
+        "precision": 0.7687019065499643,
+        "recall": 0.6412688608488485,
+        "f1": 0.6992266894370347,
+        "false_positive_rate": 0.23640540540540542,
+        "confusion_matrix": [
+          [
+            28253,
+            8747
+          ],
+          [
+            16262,
+            29070
+          ]
+        ],
+        "tn": 28253,
+        "fp": 8747,
+        "fn": 16262,
+        "tp": 29070,
+        "n_samples": 82332
+      }
+    },
+    "attack_10": {
+      "Random Forest": {
+        "accuracy": 0.7678480212108681,
+        "precision": 0.29920910636410675,
+        "recall": 0.9846752614935539,
+        "f1": 0.45895691609977324,
+        "false_positive_rate": 0.25624324324324327,
+        "confusion_matrix": [
+          [
+            27519,
+            9481
+          ],
+          [
+            63,
+            4048
+          ]
+        ],
+        "tn": 27519,
+        "fp": 9481,
+        "fn": 63,
+        "tp": 4048,
+        "n_samples": 41111
+      },
+      "Logistic Regression": {
+        "accuracy": 0.642820656272044,
+        "precision": 0.2156419773008445,
+        "recall": 0.975188518608611,
+        "f1": 0.3531847414324729,
+        "false_positive_rate": 0.3941081081081081,
+        "confusion_matrix": [
+          [
+            22418,
+            14582
+          ],
+          [
+            102,
+            4009
+          ]
+        ],
+        "tn": 22418,
+        "fp": 14582,
+        "fn": 102,
+        "tp": 4009,
+        "n_samples": 41111
+      },
+      "Rule-based baseline": {
+        "accuracy": 0.7392911872734791,
+        "precision": 0.22260475270803595,
+        "recall": 0.6448552663585503,
+        "f1": 0.3309612983770287,
+        "false_positive_rate": 0.2502162162162162,
+        "confusion_matrix": [
+          [
+            27742,
+            9258
+          ],
+          [
+            1460,
+            2651
+          ]
+        ],
+        "tn": 27742,
+        "fp": 9258,
+        "fn": 1460,
+        "tp": 2651,
+        "n_samples": 41111
+      },
+      "Zero-trust (rules)": {
+        "accuracy": 0.7392911872734791,
+        "precision": 0.22260475270803595,
+        "recall": 0.6448552663585503,
+        "f1": 0.3309612983770287,
+        "false_positive_rate": 0.2502162162162162,
+        "confusion_matrix": [
+          [
+            27742,
+            9258
+          ],
+          [
+            1460,
+            2651
+          ]
+        ],
+        "tn": 27742,
+        "fp": 9258,
+        "fn": 1460,
+        "tp": 2651,
+        "n_samples": 41111
+      }
+    },
+    "attack_30": {
+      "Random Forest": {
+        "accuracy": 0.8160508541914978,
+        "precision": 0.6222107108702583,
+        "recall": 0.9847386012486599,
+        "f1": 0.7625814958611091,
+        "false_positive_rate": 0.25624324324324327,
+        "confusion_matrix": [
+          [
+            27519,
+            9481
+          ],
+          [
+            242,
+            15615
+          ]
+        ],
+        "tn": 27519,
+        "fp": 9481,
+        "fn": 242,
+        "tp": 15615,
+        "n_samples": 52857
+      },
+      "Logistic Regression": {
+        "accuracy": 0.7168397752426358,
+        "precision": 0.5148066813069808,
+        "recall": 0.9757205019865044,
+        "f1": 0.6739996950621855,
+        "false_positive_rate": 0.3941081081081081,
+        "confusion_matrix": [
+          [
+            22418,
+            14582
+          ],
+          [
+            385,
+            15472
+          ]
+        ],
+        "tn": 22418,
+        "fp": 14582,
+        "fn": 385,
+        "tp": 15472,
+        "n_samples": 52857
+      },
+      "Rule-based baseline": {
+        "accuracy": 0.7192614034091984,
+        "precision": 0.5260571311559332,
+        "recall": 0.6480418742511194,
+        "f1": 0.580712610550705,
+        "false_positive_rate": 0.2502162162162162,
+        "confusion_matrix": [
+          [
+            27742,
+            9258
+          ],
+          [
+            5581,
+            10276
+          ]
+        ],
+        "tn": 27742,
+        "fp": 9258,
+        "fn": 5581,
+        "tp": 10276,
+        "n_samples": 52857
+      },
+      "Zero-trust (rules)": {
+        "accuracy": 0.7192614034091984,
+        "precision": 0.5260571311559332,
+        "recall": 0.6480418742511194,
+        "f1": 0.580712610550705,
+        "false_positive_rate": 0.2502162162162162,
+        "confusion_matrix": [
+          [
+            27742,
+            9258
+          ],
+          [
+            5581,
+            10276
+          ]
+        ],
+        "tn": 27742,
+        "fp": 9258,
+        "fn": 5581,
+        "tp": 10276,
+        "n_samples": 52857
+      }
+    }
+  }
+}
